@@ -1,14 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 1. Importación para Tailwind CSS v4 */
+@import "tailwindcss";
+
+/* 2. Configuración Global para una Hoja de Vida Profesional */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Forzamos esquema claro para que los colores azul y gris resalten */
+  color-scheme: light;
+  color: #1a1a1a;
+  background-color: #f3f4f6; /* Gris muy claro de fondo tipo oficina */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,26 +18,25 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* 3. Ajuste de Layout (Vital para que no se vea todo centrado y pequeño) */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  display: block; /* Cambiado de 'flex' a 'block' para que el CV fluya hacia abajo */
+  min-width: 100%;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 4. Estilos para los enlaces y botones del Admin */
+a {
+  font-weight: 500;
+  color: #5a7d95; /* Azul acorde a tu diseño */
+  text-decoration: inherit;
 }
 
 button {
@@ -44,28 +45,17 @@ button {
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: all 0.25s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* 5. Utilidades extra para el diseño de la imagen */
+.clip-path-header {
+  /* Este es el corte diagonal del encabezado azul */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+}
+
+.resume-container {
+  /* Sombra para que parezca una hoja de papel real */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }

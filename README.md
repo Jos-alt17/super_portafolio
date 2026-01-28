@@ -1,80 +1,83 @@
-Portafolio Profesional Fullstack - Final Project
-Este proyecto es un sistema de portafolio y blog técnico robusto, diseñado con un enfoque en seguridad, escalabilidad y una experiencia de usuario fluida. Permite gestionar una hoja de vida dinámica y publicar artículos técnicos a través de una interfaz de administración protegida.
+# Portfolio Profesional - Fullstack Developer 🚀
 
-🚀 Tecnologías Utilizadas
-Frontend
-React + Vite: Para una interfaz reactiva y tiempos de compilación ultra rápidos.
+Este proyecto es un sistema integral de Portafolio y Blog Técnico desarrollado como proyecto final para el curso de Desarrollo Web. Permite gestionar una hoja de vida dinámica y un blog profesional a través de una interfaz de administración segura.
 
-Tailwind CSS: Framework de utilidades para un diseño responsivo y moderno.
+## 🔗 Enlaces de Despliegue
+* **Frontend (Vercel/Netlify):** [INSERTAR_LINK_AQUÍ]
+* **Backend (Render/Railway):** [INSERTAR_LINK_AQUÍ]
+PORT=5000
+MONGO_URI=mongodb+srv://josfrns_db_user:Josf2026@portafolio-db.mect0rq.mongodb.net/?appName=Portafolio-DB
+JWT_SECRET=clave_super_secreta_123
+NODE_ENV=development
+* **Base de Datos:** MongoDB Atlas
+mongodb+srv://josfrns_db_user:Josf2026@portafolio-db.mect0rq.mongodb.net/?appName=Portafolio-DB 
 
-React Router: Gestión de navegación SPA (Single Page Application).
+---
 
-Axios: Cliente HTTP para la comunicación con la API.
+## 🛠️ Justificación de Tecnologías 
 
-Backend
-Node.js + Express.js: Entorno de ejecución y framework para la API RESTful.
+### Frontend: React + Vite + Tailwind CSS
+Se seleccionó **React** por su arquitectura basada en componentes, permitiendo una interfaz reactiva donde el estado de autenticación se gestiona de manera eficiente con Hooks (`useState`, `useEffect`). 
+* **Vite:** Elegido sobre CRA por su velocidad superior en el arranque y Hot Module Replacement (HMR).
+* **Tailwind CSS v4:** Utilizado para garantizar un diseño **responsive y accesible** mediante clases de utilidad, optimizando el tiempo de desarrollo visual.
 
-MongoDB + Mongoose: Base de datos NoSQL para persistencia de datos.
+### Backend: Node.js + Express.js
+Se implementó una **API RESTful** con Express debido a su ligereza y gran ecosistema de middlewares de seguridad. La arquitectura permite un manejo centralizado de errores y una comunicación fluida con el frontend mediante **Axios**.
 
-JWT (JSON Web Tokens): Sistema de autenticación basado en tokens.
+### Base de Datos: MongoDB (NoSQL)
+Se eligió **MongoDB con Mongoose** por las siguientes razones:
+1.  **Flexibilidad de Esquema:** Los posts del blog y la experiencia laboral no tienen una estructura rígida, permitiendo añadir campos sin afectar registros previos.
+2.  **Escalabilidad:** Ideal para aplicaciones de contenido donde la velocidad de lectura es prioritaria.
+3.  **Integración:** El formato BSON de MongoDB es nativo para el manejo de objetos JSON en JavaScript.
 
-Bcryptjs: Encriptación de contraseñas con hashing seguro.
+---
 
-🛠️ Justificaciones Técnicas (Requisitos Rúbrica)
-1. Base de Datos: ¿Por qué MongoDB (NoSQL)?
-Se seleccionó MongoDB sobre PostgreSQL por las siguientes razones:
+## 🛡️ Seguridad Implementada
+* **Autenticación:** Sistema de login protegido mediante **JWT (JSON Web Tokens)**.
+* **Protección de Datos:** Uso de **Bcrypt** para el hashing de contraseñas.
+* **Middlewares de Seguridad:** * `Helmet`: Para asegurar encabezados HTTP.
+    * `CORS`: Configurado para restringir accesos no autorizados.
+    * `Express-Rate-Limit`: Protección contra ataques de fuerza bruta.
+* **Variables de Entorno:** Gestión de secretos (`JWT_SECRET`, `MONGO_URI`) mediante archivos `.env`.
 
-Flexibilidad de Esquema: Los posts del blog y los campos de la hoja de vida pueden evolucionar sin necesidad de migraciones complejas de tablas.
+---
 
-Modelado de Datos: La capacidad de usar documentos embebidos (como arrays de habilidades o etiquetas) permite consultas más rápidas sin múltiples JOINs.
+## 🚀 Ejecución Local
 
-Nativo JSON: Al trabajar con JavaScript en todo el stack (MERN), el intercambio de datos es directo y eficiente.
+### Prerrequisitos
+* Node.js (v18 o superior)
+* MongoDB local o cuenta en MongoDB Atlas
 
-2. Seguridad Implementada
-Para cumplir con los estándares de seguridad exigidos, se integraron:
+### Paso 1: Clonar el repositorio
+```bash
+git clone (https://github.com/Jos-alt17/super_portafolio?tab=readme-ov-file#port5000)
+cd MI_PORTAFOLIO_PRO
+### Paso 2: Configurar el Backend
+1.Entra a la carpeta server: cd server
 
-Helmet.js: Configuración de cabeceras HTTP para prevenir ataques XSS y Clickjacking.
+2.Instala dependencias: npm install
 
-CORS: Restricción de acceso a la API solo desde dominios autorizados.
+3.Crea un archivo .env y añade:
+Fragmento de código
+PORT=5000
+MONGO_URI=mongodb+srv://josfrns_db_user:Josf2026@portafolio-db.mect0rq.mongodb.net/?
+appName=Portafolio-DB
+JWT_SECRET=clave_super_secreta_123
+NODE_ENV=development
+Inicia el servidor: npm run dev
 
-Express Rate Limit: Protección contra ataques de fuerza bruta limitando peticiones por IP.
+### Paso 3: Configurar el Frontend
+1.Abre una nueva terminal en la raíz del proyecto.
 
-Variables de Entorno: Uso de .env para proteger secretos como el JWT_SECRET y la MONGO_URI.
+2.Entra a la carpeta client: cd client
 
-💻 Instalación y Ejecución Local
-Requisitos previos
-Node.js instalado.
+3.Instala dependencias: npm install
 
-Instancia de MongoDB (Local o Atlas).
+4.Inicia la aplicación: npm run dev
 
-Paso 1: Clonar y configurar el servidor
-Bash
-cd server
-npm install
-# Crear archivo .env con:
-# PORT=5000
-# MONGO_URI=tu_url_de_mongodb
-# JWT_SECRET=tu_clave_secreta
-npm run dev
-Paso 2: Configurar el cliente
-Bash
-cd client
-npm install
-npm run dev
-📑 Documentación de la API
-La API sigue una arquitectura RESTful:
+### Blog Posts (Backend)
+El blog incluye artículos detallados sobre:
 
-POST /api/auth/login - Autenticación de administrador.
+Seguridad en APIs: Mejores prácticas y uso de Helmet/Rate Limit.
 
-GET /api/posts - Obtener todos los artículos.
-
-POST /api/posts - Crear artículo (Protegido).
-
-GET /api/profile - Ver hoja de vida.
-
-POST /api/profile - Editar hoja de vida (Protegido).
-
-🔗 Enlaces de Despliegue
-Frontend: [Tu enlace de Vercel/Netlify aquí]
-
-Backend: [Tu enlace de Render/Railway aquí]
+MongoDB vs PostgreSQL: Justificación técnica de la elección de base de datos. 

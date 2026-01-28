@@ -12,6 +12,20 @@ const getPosts = async (req, res) => {
   }
 };
 
+// @desc    Obtener un solo post por ID
+// @route   GET /api/posts/:id
+const getPostById = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ message: 'Post no encontrado' });
+    }
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener el post', error });
+  }
+};
+
 // @desc    Crear un post (PROTEGIDO)
 // @route   POST /api/posts
 const createPost = async (req, res) => {
@@ -36,4 +50,4 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = { getPosts, createPost, deletePost };
+module.exports = { getPosts, getPostById, createPost, deletePost };
