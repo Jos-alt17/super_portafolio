@@ -1,23 +1,50 @@
-import { useState } from 'react';
-import api from '../api/axios'; // Importa la configuración de Axios que hicimos
+import { useState, useEffect } from 'react'; // Se añade useEffect para cargar los posts
+import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
   const [post, setPost] = useState({ title: '', content: '', category: 'Backend' });
   const [mensaje, setMensaje] = useState('');
+  const [myPosts, setMyPosts] = useState([]); // Estado para listar tus posts actuales
   const navigate = useNavigate();
+
+  // Cargar posts al inicio para poder gestionarlos
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const { data } = await api.get('/posts');
+      setMyPosts(data);
+    } catch (err) {
+      console.error("Error al cargar posts para gestión");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Enviamos el post al backend (la ruta está protegida, pero axios envía el token automáticamente)
       await api.post('/posts', post);
       setMensaje('✅ ¡Post publicado con éxito!');
-      
-      // Opcional: Redirigir al blog después de 2 segundos para ver el resultado
+      setPost({ title: '', content: '', category: 'Backend' }); // Limpiar formulario
+      fetchPosts(); // Actualizar lista
       setTimeout(() => navigate('/blog'), 2000);
     } catch (error) {
       setMensaje('❌ Error: ' + (error.response?.data?.message || 'No se pudo publicar'));
+    }
+  };
+
+  // --- FUNCIÓN PARA ELIMINAR POSTS ---
+  const handleDelete = async (id) => {
+    if (window.confirm("¿Estás seguro de que quieres eliminar este post?")) {
+      try {
+        await api.delete(`/posts/${id}`);
+        setMensaje('🗑️ Post eliminado correctamente');
+        fetchPosts(); // Refrescar la lista
+      } catch (error) {
+        setMensaje('❌ Error al eliminar el post');
+      }
     }
   };
 
@@ -58,7 +85,7 @@ const CreatePost = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Contenido Técnico (+1000 palabras)</label>
+          <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Contenido Técnico </label>
           <textarea 
             className="w-full p-3 border-2 border-gray-200 rounded h-96 focus:border-blue-500 outline-none font-mono text-sm"
             value={post.content}
@@ -75,6 +102,27 @@ const CreatePost = () => {
           🚀 PUBLICAR EN EL BLOG
         </button>
       </form>
+
+      {/* --- SECCIÓN DE GESTIÓN (BORRADO) --- */}
+      <div className="mt-16">
+        <h3 className="text-xl font-bold mb-4 text-gray-700 border-l-4 border-red-500 pl-3">Gestionar / Eliminar Posts</h3>
+        <div className="space-y-3">
+          {myPosts.map((p) => (
+            <div key={p._id} className="flex justify-between items-center p-4 bg-gray-50 border rounded">
+              <div>
+                <p className="font-bold text-gray-800">{p.title}</p>
+                <span className="text-xs text-blue-600 font-semibold">{p.category}</span>
+              </div>
+              <button 
+                onClick={() => handleDelete(p._id)}
+                className="bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+              >
+                Eliminar
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

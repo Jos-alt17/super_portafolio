@@ -5,7 +5,7 @@ Este proyecto es un sistema integral de Portafolio y Blog Técnico desarrollado 
 ## 🔗 Enlaces de Despliegue
 * **Frontend (Vercel/Netlify):** (https://vercel.com/jos-alt17s-projects/super_portafolio/FGqk8iMgRLzFRhuYCnvW9eU2qywu)
 * **Backend (Render/Railway):** https://super-portafolio-1.onrender.com/
-
+### esto va en  .env debe crearse en raiz de server y pegar todo este contenido:
 PORT=5000
 MONGO_URI=mongodb+srv://josfrns_db_user:Josf2026@portafolio-db.mect0rq.mongodb.net/?appName=Portafolio-DB
 JWT_SECRET=clave_super_secreta_123

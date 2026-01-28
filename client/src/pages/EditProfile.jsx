@@ -27,13 +27,33 @@ const EditProfile = () => {
     fetchProfile();
   }, []);
 
-  // --- MANEJADORES PARA LISTAS (EXPERIENCIA, IDIOMAS, EDUCACIÓN) ---
+  // --- FUNCIONES PARA AÑADIR ---
   const addExperience = () => {
     setProfile({ ...profile, experience: [...profile.experience, { role: '', company: '', city: '', duration: '', description: [''] }] });
   };
 
+  const addEducation = () => {
+    setProfile({ ...profile, education: [...profile.education, { school: '', degree: '', year: '' }] });
+  };
+
   const addLanguage = () => {
     setProfile({ ...profile, languages: [...profile.languages, { name: '', level: 80 }] });
+  };
+
+  // --- FUNCIONES PARA ELIMINAR ---
+  const removeExperience = (index) => {
+    const newExp = profile.experience.filter((_, i) => i !== index);
+    setProfile({ ...profile, experience: newExp });
+  };
+
+  const removeEducation = (index) => {
+    const newEdu = profile.education.filter((_, i) => i !== index);
+    setProfile({ ...profile, education: newEdu });
+  };
+
+  const removeLanguage = (index) => {
+    const newLangs = profile.languages.filter((_, i) => i !== index);
+    setProfile({ ...profile, languages: newLangs });
   };
 
   const handleSubmit = async (e) => {
@@ -46,7 +66,7 @@ const EditProfile = () => {
       };
       await api.post('/profile', payload);
       alert("✅ ¡Hoja de Vida actualizada con éxito!");
-      window.location.href = '/'; // Redirige al Home para ver los cambios
+      window.location.href = '/';
     } catch (err) {
       alert("Error al guardar los cambios");
     }
@@ -75,16 +95,16 @@ const EditProfile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input className="p-2 border rounded" placeholder="Teléfono" value={profile.contact.phone} onChange={e => setProfile({...profile, contact: {...profile.contact, phone: e.target.value}})} />
             <input className="p-2 border rounded" placeholder="Email" value={profile.contact.email} onChange={e => setProfile({...profile, contact: {...profile.contact, email: e.target.value}})} />
-            <input className="p-2 border rounded" placeholder="Ubicación (Ciudad, País)" value={profile.contact.location} onChange={e => setProfile({...profile, contact: {...profile.contact, location: e.target.value}})} />
+            <input className="p-2 border rounded" placeholder="Ubicación" value={profile.contact.location} onChange={e => setProfile({...profile, contact: {...profile.contact, location: e.target.value}})} />
             <input className="p-2 border rounded" placeholder="LinkedIn URL" value={profile.contact.linkedin} onChange={e => setProfile({...profile, contact: {...profile.contact, linkedin: e.target.value}})} />
           </div>
         </div>
 
-        {/* 3. IDIOMAS (CON BARRA DE NIVEL) */}
+        {/* 3. IDIOMAS */}
         <div>
           <h3 className="font-bold mb-4 text-[#5a7d95] uppercase text-sm">Idiomas</h3>
           {profile.languages.map((lang, i) => (
-            <div key={i} className="flex gap-4 mb-2 items-center">
+            <div key={i} className="flex gap-4 mb-3 items-center bg-gray-50 p-2 rounded">
               <input className="p-2 border rounded flex-grow" placeholder="Idioma" value={lang.name} onChange={e => {
                 const newLangs = [...profile.languages]; newLangs[i].name = e.target.value; setProfile({...profile, languages: newLangs});
               }} />
@@ -92,16 +112,41 @@ const EditProfile = () => {
                 const newLangs = [...profile.languages]; newLangs[i].level = e.target.value; setProfile({...profile, languages: newLangs});
               }} className="w-32" />
               <span className="text-xs font-bold w-8">{lang.level}%</span>
+              <button type="button" onClick={() => removeLanguage(i)} className="text-red-500 font-bold px-2">✕</button>
             </div>
           ))}
           <button type="button" onClick={addLanguage} className="text-blue-600 text-xs font-bold mt-2">+ AÑADIR IDIOMA</button>
         </div>
 
-        {/* 4. EXPERIENCIA LABORAL */}
+        {/* 4. FORMACIÓN ACADÉMICA (NUEVO) */}
+        <div>
+          <h3 className="font-bold mb-4 text-[#5a7d95] uppercase text-sm border-b pb-2">Formación Académica</h3>
+          {profile.education.map((edu, i) => (
+            <div key={i} className="p-4 border rounded shadow-sm mb-4 bg-white relative">
+              <button type="button" onClick={() => removeEducation(i)} className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">Eliminar</button>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <input className="p-2 border rounded" placeholder="Institución/Escuela" value={edu.school} onChange={e => {
+                  const newEdu = [...profile.education]; newEdu[i].school = e.target.value; setProfile({...profile, education: newEdu});
+                }} />
+                <input className="p-2 border rounded" placeholder="Título obtenido" value={edu.degree} onChange={e => {
+                  const newEdu = [...profile.education]; newEdu[i].degree = e.target.value; setProfile({...profile, education: newEdu});
+                }} />
+                <input className="p-2 border rounded" placeholder="Año (Ej: 2020)" value={edu.year} onChange={e => {
+                  const newEdu = [...profile.education]; newEdu[i].year = e.target.value; setProfile({...profile, education: newEdu});
+                }} />
+              </div>
+            </div>
+          ))}
+          <button type="button" onClick={addEducation} className="w-full border-2 border-dashed border-gray-300 py-2 text-gray-500 rounded-lg hover:bg-gray-50 mb-6">
+            + Añadir Formación
+          </button>
+        </div>
+
+        {/* 5. EXPERIENCIA LABORAL */}
         <div>
           <h3 className="font-bold mb-4 text-[#5a7d95] uppercase text-sm border-b pb-2">Experiencia Profesional</h3>
           {profile.experience.map((exp, i) => (
-            <div key={i} className="p-4 bg-white border rounded shadow-sm mb-4 space-y-3">
+            <div key={i} className="p-4 bg-white border rounded shadow-sm mb-4 space-y-3 relative">
               <div className="grid grid-cols-2 gap-2">
                 <input className="p-2 border rounded font-bold" placeholder="Cargo/Role" value={exp.role} onChange={e => {
                   const newExp = [...profile.experience]; newExp[i].role = e.target.value; setProfile({...profile, experience: newExp});
@@ -123,6 +168,9 @@ const EditProfile = () => {
                   setProfile({...profile, experience: newExp});
                 }} 
               />
+              <div className="flex justify-end">
+                <button type="button" onClick={() => removeExperience(i)} className="bg-red-500 text-white px-4 py-1 rounded text-sm hover:bg-red-700">Eliminar</button>
+              </div>
             </div>
           ))}
           <button type="button" onClick={addExperience} className="w-full border-2 border-dashed border-gray-300 py-3 text-gray-500 rounded-lg hover:bg-gray-50 transition">
