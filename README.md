@@ -3,8 +3,9 @@
 Este proyecto es un sistema integral de Portafolio y Blog Técnico desarrollado como proyecto final para el curso de Desarrollo Web. Permite gestionar una hoja de vida dinámica y un blog profesional a través de una interfaz de administración segura.
 
 ## 🔗 Enlaces de Despliegue
-* **Frontend (Vercel/Netlify):** [INSERTAR_LINK_AQUÍ]
-* **Backend (Render/Railway):** [INSERTAR_LINK_AQUÍ]
+* **Frontend (Vercel/Netlify):** (https://vercel.com/jos-alt17s-projects/super_portafolio/FGqk8iMgRLzFRhuYCnvW9eU2qywu)
+* **Backend (Render/Railway):** https://super-portafolio-1.onrender.com/
+
 PORT=5000
 MONGO_URI=mongodb+srv://josfrns_db_user:Josf2026@portafolio-db.mect0rq.mongodb.net/?appName=Portafolio-DB
 JWT_SECRET=clave_super_secreta_123
